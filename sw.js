@@ -1,8 +1,7 @@
 self.addEventListener('install', (event) => {
-    self.skipWaiting();
+    console.log('Service Worker instalado');
 });
 
 self.addEventListener('fetch', (event) => {
-    // Necessário para ser instalável
-    event.respondWith(fetch(event.request));
+    // Obrigatório para o Chrome mostrar o botão de instalar
 });
