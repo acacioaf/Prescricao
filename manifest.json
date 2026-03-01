@@ -1,0 +1,16 @@
+{
+  "name": "Prescrição Santa Marta",
+  "short_name": "Prescrição",
+  "description": "Sistema de Prescrição de Enfermagem",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#e6f7e9",
+  "theme_color": "#38a700",
+  "icons": [
+    {
+      "src": "xxx.png.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

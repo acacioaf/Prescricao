@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescrição de Enfermagem</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#38a700">
+    <link rel="icon" href="xxx.png.png" type="image/png">
+    <link rel="apple-touch-icon" href="xxx.png.png">
+
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+        }
+        .scale-section { display: block !important; }
+    </style>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(err => console.log("Modo local ativo"));
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="header-section">
+            <img src="logo_topo.png.png" class="logo-image" alt="Logo da Empresa">
+            <div class="header-text-block">
+                <h1>Prescrição de enfermagem</h1>
+            </div>
+            <div style="width: 180px;"></div> 
+        </div>
+
+        <div class="patient-info">
+            <h3>Dados do Paciente</h3>
+            <div class="patient-grid">
+                <div>
+                    <label>Nome</label>
+                    <input type="text" id="patientName" placeholder="Nome completo">
+                </div>
+                <div>
+                    <label>Data de Nascimento</label>
+                    <input type="date" id="patientBirth">
+                </div>
+                <div>
+                    <label>Nome da Mãe</label>
+                    <input type="text" id="patientMother" placeholder="Nome da mãe">
+                </div>
+                <div>
+                    <label>Prontuário</label>
+                    <input type="text" id="patientRecord" placeholder="Nº prontuário">
+                </div>
+            </div>
+        </div>
+
+        <form id="assessmentForm">
+            <div class="scale-section" id="scale-prescricao">
+                <h2 style="text-align: center; color: #38a700;">Modelos de cuidados</h2>
+                <p style="text-align: center;">Selecione os itens de prescrição para o paciente.</p>
+                
+                <div class="assessment-group" data-criterion="cuidadosEnfermagem">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Cuidados de enfermagem</label>
+                        <span class="chevron"> ▶ </span>
+                    </div>
+                    <select id="cuidadosEnfermagemSelect" name="cuidadosEnfermagem[]" style="display: none;" multiple>
+                        <option value="1">Higiene e Conforto no leito</option>
+                        <option value="2">Mudança de Decúbito (a cada 2h)</option>
+                        <option value="3">Prevenção de Lesão por Pressão (LP)</option>
+                        <option value="4">Avaliação e registro de Sinais Vitais (SV)</option>
+                        <option value="5">Controle hídrico (Diurese e Ingesta)</option>
+                        <option value="6">Monitoramento de Glicemia Capilar</option>
+                        <option value="10">Administração de medicamentos via oral</option>
+                        <option value="11">Administração de medicamentos via parenteral</option>
+                        <option value="14">Coleta de exames laboratoriais</option>
+                        <option value="15">Auxílio na alimentação</option>
+                        <option value="22">Avaliação da dor</option>
+                        <option value="23">Educação do paciente/família sobre a doença</option>
+                        <option value="25">Manutenção de isolamento (se aplicável)</option>
+                        <option value="29">Oferta de líquidos</option>
+                        <option value="30">Posicionamento Fowler/Semi-Fowler</option>
+                        <option value="35">Registro de eliminações (intestinal)</option>
+                        <option value="36">Orientação sobre alta hospitalar</option>
+                        <option value="39">Instalação de Bomba de Infusão</option>
+                        <option value="40">Prevenção de queda</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="cuidadosEnfermagemSelect">
+                        <div class="option-balloon" data-value="1">Higiene e Conforto no leito</div>
+                        <div class="option-balloon" data-value="2">Mudança de Decúbito (a cada 2h)</div>
+                        <div class="option-balloon" data-value="3">Prevenção de Lesão por Pressão (LP)</div>
+                        <div class="option-balloon" data-value="4">Avaliação e registro de Sinais Vitais (SV)</div>
+                        <div class="option-balloon" data-value="5">Controle hídrico (Diurese e Ingesta)</div>
+                        <div class="option-balloon" data-value="6">Monitoramento de Glicemia Capilar</div>
+                        <div class="option-balloon" data-value="10">Administração de medicamentos via oral</div>
+                        <div class="option-balloon" data-value="11">Administração de medicamentos via parenteral</div>
+                        <div class="option-balloon" data-value="14">Coleta de exames laboratoriais</div>
+                        <div class="option-balloon" data-value="15">Auxílio na alimentação</div>
+                        <div class="option-balloon" data-value="22">Avaliação da dor</div>
+                        <div class="option-balloon" data-value="23">Educação do paciente/família sobre a doença</div>
+                        <div class="option-balloon" data-value="25">Manutenção de isolamento (se aplicável)</div>
+                        <div class="option-balloon" data-value="29">Oferta de líquidos</div>
+                        <div class="option-balloon" data-value="30">Posicionamento Fowler/Semi-Fowler</div>
+                        <div class="option-balloon" data-value="35">Registro de eliminações (intestinal)</div>
+                        <div class="option-balloon" data-value="36">Orientação sobre alta hospitalar</div>
+                        <div class="option-balloon" data-value="39">Instalação de Bomba de Infusão</div>
+                        <div class="option-balloon" data-value="40">Prevenção de queda</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="prescricaoCirurgica">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Cirúrgico</label>
+                        <span class="chevron"> ▶ </span>
+                    </div>
+                    <select id="prescricaoCirurgicaSelect" name="prescricaoCirurgica[]" style="display: none;" multiple>
+                        <option value="12">Monitoramento de acesso venoso periférico</option>
+                        <option value="13">Monitoramento de acesso venoso central</option>
+                        <option value="21">Aplicação de oxigenioterapia</option>
+                        <option value="24">Preparo para exames/procedimentos</option>
+                        <option value="27">Cuidados com traqueostomia</option>
+                        <option value="28">Monitoramento de drenos e débitos</option>
+                        <option value="34">Observação de sinais de sangramento</option>
+                        <option value="38">Monitoramento de sinais de infecção</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="prescricaoCirurgicaSelect">
+                        <div class="option-balloon" data-value="12">Monitoramento de acesso venoso periférico</div>
+                        <div class="option-balloon" data-value="13">Monitoramento de acesso venoso central</div>
+                        <div class="option-balloon" data-value="21">Aplicação de oxigenioterapia</div>
+                        <div class="option-balloon" data-value="24">Preparo para exames/procedimentos</div>
+                        <div class="option-balloon" data-value="27">Cuidados com traqueostomia</div>
+                        <div class="option-balloon" data-value="28">Monitoramento de drenos e débitos</div>
+                        <div class="option-balloon" data-value="34">Observação de sinais de sangramento</div>
+                        <div class="option-balloon" data-value="38">Monitoramento de sinais de infecção</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="prescricaoPosOperatoria">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Pós-operatório</label>
+                        <span class="chevron"> ▶ </span>
+                    </div>
+                    <select id="prescricaoPosOperatoriaSelect" name="prescricaoPosOperatoria[]" style="display: none;" multiple>
+                        <option value="1">Higiene e Conforto no leito</option>
+                        <option value="2">Mudança de Decúbito (a cada 2h)</option>
+                        <option value="3">Prevenção de Lesão por Pressão (LP)</option>
+                        <option value="7">Aspiração de Vias Aéreas</option>
+                        <option value="8">Curativo simples de ferida</option>
+                        <option value="9">Curativo de Úlcera por Pressão (UP)</option>
+                        <option value="16">Treinamento de bexiga</option>
+                        <option value="17">Cuidados com Sonda Vesical de Demora (SVD)</option>
+                        <option value="18">Cuidados com Sonda Nasogástrica (SNG)</option>
+                        <option value="19">Cuidados com Sonda Enteral</option>
+                        <option value="20">Cateterismo vesical intermitente</option>
+                        <option value="26">Estimulação da mobilidade (deambulação)</option>
+                        <option value="31">Auxílio na higiene íntima</option>
+                        <option value="32">Banho de aspersão/chuveiro (se permitido)</option>
+                        <option value="33">Cuidados com a pele e mucosas</option>
+                        <option value="37">Aplicação de calor/frio local</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="prescricaoPosOperatoriaSelect">
+                        <div class="option-balloon" data-value="1">Higiene e Conforto no leito</div>
+                        <div class="option-balloon" data-value="2">Mudança de Decúbito (a cada 2h)</div>
+                        <div class="option-balloon" data-value="3">Prevenção de Lesão por Pressão (LP)</div>
+                        <div class="option-balloon" data-value="7">Aspiração de Vias Aéreas</div>
+                        <div class="option-balloon" data-value="8">Curativo simples de ferida</div>
+                        <div class="option-balloon" data-value="9">Curativo de Úlcera por Pressão (UP)</div>
+                        <div class="option-balloon" data-value="16">Treinamento de bexiga</div>
+                        <div class="option-balloon" data-value="17">Cuidados com Sonda Vesical de Demora (SVD)</div>
+                        <div class="option-balloon" data-value="18">Cuidados com Sonda Nasogástrica (SNG)</div>
+                        <div class="option-balloon" data-value="19">Cuidados com Sonda Enteral</div>
+                        <div class="option-balloon" data-value="20">Cateterismo vesical intermitente</div>
+                        <div class="option-balloon" data-value="26">Estimulação da mobilidade (deambulação)</div>
+                        <div class="option-balloon" data-value="31">Auxílio na higiene íntima</div>
+                        <div class="option-balloon" data-value="32">Banho de aspersão/chuveiro (se permitido)</div>
+                        <div class="option-balloon" data-value="33">Cuidados com a pele e mucosas</div>
+                        <div class="option-balloon" data-value="37">Aplicação de calor/frio local</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="container-button">
+            <button type="button" class="button" onclick="generateResult()">Gerar Resultado</button>
+        </div>
+
+        <div id="result" style="display:none;">
+    <img src="logo_topo.png.png" class="print-logo-img" alt="Logo">
+    
+    <h2 id="result-scale-title">Prescrição de Enfermagem</h2>
+    <hr>
+
+    <div class="patient-result-data">
+        <p><strong>Nome:</strong> <span id="r_name"></span></p>
+        <p><strong>Data Nasc.:</strong> <span id="r_birth"></span></p>
+        <p><strong>Mãe:</strong> <span id="r_mother"></span></p>
+        <p><strong>Prontuário:</strong> <span id="r_record"></span></p>
+    </div>
+    
+    <div id="selectedOptionsContainer"></div>
+
+    <div id="extraCareContainer" style="margin-top: 10px;" class="no-print">
+        <div style="text-align: center; margin-bottom: 10px;">
+            <button type="button" class="button" onclick="addExtraCareRow()" style="background-color: #28a745;">
+                + Adicionar Cuidado Manual
+            </button>
+        </div>
+    </div>
+
+    <div class="no-print" style="margin-top: 20px; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
+    <button type="button" class="button" onclick="window.print()" style="background-color: var(--color-primary-blue); padding: 12px 40px;">
+        Imprimir Prescrição
+    </button>
+</div>
+    
+    <div class="signature-area">
+        <div class="signature-line"></div>
+        <p>Assinatura do Enfermeiro</p>
+    </div>
+</div>
+
+    <script>
+        function addExtraCareRow() {
+            const grid = document.querySelector('.prescription-grid');
+            if (!grid) {
+                alert("Por favor, selecione ao menos um cuidado e clique em 'Gerar Resultado' primeiro.");
+                return;
+            }
+            const divCuidado = document.createElement('div');
+            divCuidado.className = 'grid-item-cuidado';
+            divCuidado.style.display = 'flex';
+            divCuidado.style.gap = '10px';
+
+            const inputCuidado = document.createElement('input');
+            inputCuidado.type = 'text';
+            inputCuidado.placeholder = 'Digite o cuidado aqui...';
+            inputCuidado.className = 'manual-input';
+            inputCuidado.style.flex = '1';
+            
+            const btnDelete = document.createElement('button');
+            btnDelete.innerHTML = 'x';
+            btnDelete.className = 'no-print';
+            btnDelete.style.border = 'none';
+            btnDelete.style.background = 'none';
+            btnDelete.style.cursor = 'pointer';
+            btnDelete.onclick = function() {
+                divCuidado.remove();
+                divHorario.remove();
+            };
+
+            divCuidado.appendChild(btnDelete);
+            divCuidado.appendChild(inputCuidado);
+
+            const divHorario = document.createElement('div');
+            divHorario.className = 'grid-item-horario';
+            const inputHorario = document.createElement('input');
+            inputHorario.type = 'text';
+            divHorario.appendChild(inputHorario);
+
+            grid.appendChild(divCuidado);
+            grid.appendChild(divHorario);
+            inputCuidado.focus();
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

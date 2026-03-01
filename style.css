@@ -1,0 +1,454 @@
+/* Definição de Cores Simbólicas */
+:root {
+    --color-green-light: #e6f7e9; /* Fundo principal da página */
+    --color-green-hospital: #38a700; /* Verde institucional (texto, bordas) */
+    --color-red-symbolic: #e23131; /* Vermelho simbólico (ênfase, perigo) */
+    --color-primary-blue: #007bff; /* Mantido para botões de ação */
+}
+
+/* Fonte e estilo geral */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-green-light);
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Container principal */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-top: 5px solid var(--color-green-hospital);
+}
+
+/* --- ESTILO DOS LOGOS E CABEÇALHO (PARA VISUALIZAÇÃO NORMAL) --- */
+.header-section {
+    /* Usa Flexbox para colocar itens lado a lado: Logo | Título | Spacer */
+    display: flex;
+    align-items: center; /* Alinha verticalmente no centro */
+    justify-content: space-between; /* Espaço entre Logo e o Título */
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--color-green-light); 
+    padding-bottom: 10px;
+}
+
+.logo-image {
+    max-width: 200px; 
+    height: auto;
+    object-fit: contain;
+}
+
+.header-text-block {
+    /* Permite que o bloco de texto ocupe o máximo de espaço e centralize o h1 */
+    flex-grow: 1; 
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: var(--color-green-hospital);
+    margin: 0; 
+}
+
+/* NOVO: Esconde a tag <img> do logo de impressão na visualização normal */
+.print-logo-img {
+    display: none; 
+}
+/* --- FIM LOGOS E CABEÇALHO NORMAL --- */
+
+
+h2 {
+    text-align: center;
+    color: var(--color-green-hospital);
+    font-size: 1.4rem; 
+    margin-top: 25px;
+}
+
+/* --- ESTILO DO MENU E CRITÉRIOS (MANTIDO) --- */
+.scale-menu {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--color-green-light);
+}
+
+.scale-btn {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 20px;
+    color: #495057;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    margin: 0 5px 10px 5px;
+    display: inline-block;
+}
+
+.scale-btn:hover {
+    background-color: #e9ecef;
+}
+
+.scale-btn.active {
+    background-color: var(--color-green-hospital);
+    color: white;
+    border-color: var(--color-green-hospital);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.scale-section.hidden {
+    display: none;
+}
+
+/* DADOS DO PACIENTE */
+.patient-info {
+    padding: 15px; 
+    border: 1px solid var(--color-green-hospital); 
+    border-radius: 6px;
+    background-color: var(--color-green-light); 
+    margin-bottom: 25px; 
+}
+.patient-info h3 {
+    color: var(--color-green-hospital); 
+    text-align: center;
+    margin: 0 0 10px 0; 
+    font-size: 1.15rem; 
+}
+.patient-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 15px; 
+}
+.patient-grid label {
+    display: block;
+    font-weight: 600; 
+    margin-bottom: 5px; 
+    color: var(--color-green-hospital); 
+    font-size: 0.9rem;
+}
+.patient-grid input {
+    width: 100%;
+    padding: 8px 10px; 
+    border-radius: 4px; 
+    border: 1px solid #ddd; 
+    box-sizing: border-box; 
+}
+
+/* ESTILO DOS BALÕES DE CRITÉRIOS */
+.assessment-group {
+    margin-bottom: 20px;
+    border: 1px solid var(--color-green-light);
+    border-radius: 8px;
+    background-color: #fcfcfc;
+}
+
+.criterion-header {
+    padding: 10px 15px;
+    background-color: var(--color-green-light);
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.criterion-header label {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-green-hospital);
+    margin: 0;
+}
+
+.option-container {
+    padding: 10px 15px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.option-container.hidden-by-default {
+    display: none; 
+}
+
+
+.option-balloon {
+    flex-grow: 1;
+    min-width: 100px;
+    padding: 8px 10px;
+    border-radius: 20px;
+    background-color: #e9ecef;
+    color: #495057;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid #e9ecef;
+    transition: all 0.2s ease-in-out;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.option-balloon:hover {
+    background-color: #dee2e6;
+}
+
+.option-balloon.selected {
+    background-color: var(--color-red-symbolic);
+    color: white;
+    border-color: #9a232f;
+    box-shadow: 0 2px 5px rgba(220, 53, 69, 0.4);
+}
+
+/* BOTÃO DE GERAR RESULTADO */
+.container-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button {
+    background-color: var(--color-primary-blue);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.button:hover {
+    background-color: #0056b3; /* Um azul mais escuro ao passar o mouse */
+}
+
+/* RESULTADO (NORMAL) */
+#result {
+    margin-top: 25px;
+    padding: 18px;
+    background-color: var(--color-green-light); /* Troca o vermelho pelo verde claro padrão */
+    border-left: 6px solid var(--color-green-hospital); /* Troca a borda vermelha por verde hospitalar */
+    border-radius: 8px;
+    text-align: left !important;
+}
+
+#result h2 {
+    color: var(--color-green-hospital); /* Altera o título do resultado para verde */
+    font-size: 1.3rem;
+    text-align: center !important;
+}
+
+#selectedOptionsContainer {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-radius: 5px;
+}
+#selectedOptionsContainer h3 {
+    text-align: left;
+    color: #333;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+/* ÁREA DE ASSINATURA */
+.signature-area {
+    display: none; 
+    margin-top: 50px;
+    text-align: center;
+}
+.signature-line {
+    width: 60%;
+    max-width: 300px; 
+    margin: 0 auto; 
+    border-top: 1px solid #000;
+}
+
+
+/* =======================================================
+    NOVO: ESTILOS PARA O GRID DE PRESCRIÇÃO
+   ======================================================= */
+.prescription-grid {
+    display: grid;
+    /* Coluna 1: Cuidado (60%), Coluna 2: Horário (40%) */
+    grid-template-columns: 60% 40%;
+    border: 1px solid #ccc; /* Borda externa do quadro */
+    border-radius: 5px;
+    overflow: hidden; 
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+.prescription-grid .grid-header-cuidado,
+.prescription-grid .grid-header-horario {
+    font-weight: 700;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.prescription-grid .grid-item-cuidado,
+.prescription-grid .grid-item-horario {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    display: flex; 
+    align-items: center;
+}
+
+.prescription-grid .grid-item-cuidado {
+    border-right: 1px solid #eee;
+    font-weight: 500;
+    color: #444;
+}
+
+.prescription-grid input[type="text"] {
+    width: 95%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* Garante que a última linha não tenha borda inferior */
+.prescription-grid > div:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+
+/* =======================================================
+   MODO IMPRESSÃO: OTIMIZAÇÃO AGRESSIVA PARA UMA PÁGINA
+   ======================================================= */
+@media print {
+
+    /* 1. Esconde tudo inicialmente (exceto o #result) */
+    body * {
+        visibility: hidden;
+    }
+    
+    /* 2. Margens Mínimas da Página */
+    @page {
+        size: A4;
+        margin: 0.8cm; /* Margem da página reduzida */
+    }
+    
+    /* 3. Mostrar APENAS a seção de resultado e aplicar fonte pequena */
+    #result, #result * {
+        visibility: visible !important;
+        box-shadow: none !important;
+        border: none !important;
+        color: #000 !important;
+        font-size: 11pt !important; /* Fonte aumentada para 11pt para melhor leitura */
+    }
+
+    #result {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 15px; /* Padding interno reduzido */
+        background: white !important;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    
+    /* 4. Logo do Topo na Impressão (usando a tag <img>) */
+    .print-logo-img {
+        display: block !important; /* Torna a tag <img> visível apenas na impressão */
+        width: 250px; /* Tamanho do logo conforme solicitado */
+        height: auto;
+        margin: 0 auto 20px auto; /* Centraliza a imagem e aplica margem inferior mínima */
+        object-fit: contain;
+    }
+    
+    /* 5. Otimização de Espaçamento Vertical */
+    #result h2, #result h3 {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+        font-size: 14pt !important; /* Títulos um pouco maiores, mas com margem zero */
+        text-align: center !important;
+    }
+    
+    #result p {
+        margin: 2px 0 !important; /* Margens mínimas para parágrafos */
+        line-height: 1.5; /* Espaçamento entre linhas mais apertado */
+        text-align: left !important;
+    }
+    
+    #result hr {
+        margin: 5px 0 !important;
+    }
+
+    /* Otimizar a visualização dos Dados do Paciente (colocando-os inline) */
+    #r_name, #r_birth, #r_mother, #r_record {
+        display: inline-block; 
+        margin-right: 15px;
+    }
+
+    /* Manter o estilo de caixa de texto (opções selecionadas) */
+    #selectedOptionsContainer {
+        border: 1px solid #000 !important; 
+        padding: 8px !important; /* Padding reduzido */
+        margin-top: 10px !important; /* Margem superior reduzida */
+    }
+    #selectedOptionsContainer p {
+        margin: 1px 0 !important; /* Margens mínimas para itens de opção */
+    }
+
+    /* NOVO: Estilo para Grid de Prescrição na Impressão */
+    .prescription-grid {
+        border: 1px solid #000 !important; /* Borda mais forte */
+    }
+    .prescription-grid .grid-header-cuidado,
+    .prescription-grid .grid-header-horario {
+        background-color: #f8f8f8 !important;
+        border-bottom: 1px solid #000 !important;
+        font-size: 10pt !important;
+        padding: 5px !important;
+    }
+
+    .prescription-grid .grid-item-cuidado,
+    .prescription-grid .grid-item-horario {
+        border-bottom: 1px dotted #000 !important; /* Linhas pontilhadas entre os itens */
+        padding: 5px !important;
+    }
+
+    .prescription-grid .grid-item-cuidado {
+        border-right: 1px solid #000 !important;
+    }
+
+    /* Ocultar input fields e substituí-los por uma linha sublinhada/espaço vazio para preenchimento manual */
+    .prescription-grid input[type="text"] {
+        display: inline-block !important;
+        width: 98% !important;
+        border: none !important;
+        border-bottom: 1px solid #000 !important; /* Linha de preenchimento */
+        padding: 0 !important;
+        margin: 0 !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        font-size: 10pt !important;
+        height: 1.5em; /* Garante altura mínima para escrever */
+    }
+
+    /* Garante que a última linha não tenha borda inferior, mas o input continua */
+    .prescription-grid > div:nth-last-child(-n+2) {
+        border-bottom: none !important;
+    }
+
+    /* 6. ÁREA DE ASSINATURA (Mostra somente na Impressão) */
+    .signature-area {
+        display: block !important; /* **MOSTRA** a área de assinatura na impressão */
+        margin-top: 30px !important;
+        text-align: right;
+    }
+    .button {
+        display: none !important;
+    }
+}
