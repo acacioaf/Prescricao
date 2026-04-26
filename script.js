@@ -4,16 +4,12 @@
 
 const SCALES_INFO = {
     prescricao: {
-        title: "Dados do paciente",
-        getRiskLevel: () => "Cuidados Registrados"
+        title: "Sistematização da Assistência de Enfermagem (SAE)",
     }
 };
 
-// Como agora só existe a prescrição, ela é a única escala ativa
-let activeScale = 'prescricao';
-
 // ====================================================================
-// 2. FUNÇÕES DE INTERAÇÃO (ABRIR/FECHAR E SELECIONAR)
+// 2. FUNÇÕES DE INTERAÇÃO (BALÕES E SELEÇÃO)
 // ====================================================================
 
 function toggleOptions(header) {
@@ -23,10 +19,10 @@ function toggleOptions(header) {
     
     if (optionsContainer.classList.contains('hidden-by-default')) {
         optionsContainer.classList.remove('hidden-by-default');
-        if (chevron) chevron.textContent = '▼';
+        if (chevron) chevron.textContent = ' ▼ ';
     } else {
         optionsContainer.classList.add('hidden-by-default');
-        if (chevron) chevron.textContent = '▶';
+        if (chevron) chevron.textContent = ' ▶ ';
     }
 }
 
@@ -38,7 +34,6 @@ function initializeOptionListeners() {
             const selectElement = document.getElementById(selectId);
             const selectedValue = this.dataset.value;
 
-            // Comportamento de Múltipla Seleção (Checkbox)
             this.classList.toggle('selected');
 
             if (selectElement) {
@@ -60,70 +55,146 @@ function generateResult() {
     // 1. Dados do Paciente
     document.getElementById('r_name').textContent = document.getElementById('patientName').value || 'Não Informado';
     document.getElementById('r_birth').textContent = document.getElementById('patientBirth').value || 'Não Informado';
-    document.getElementById('r_mother').textContent = document.getElementById('patientMother').value || 'Não Informado';
     document.getElementById('r_record').textContent = document.getElementById('patientRecord').value || 'Não Informado';
-    
-    // 2. Título do Resultado
+
     document.getElementById('result-scale-title').textContent = SCALES_INFO.prescricao.title;
     
-    // 3. Processar itens selecionados
-    displaySelectedOptions();
+    const container = document.getElementById('selectedOptionsContainer');
+    container.innerHTML = ''; 
+
+    // GRADE 1: Diagnósticos (Sem horários, campo 50% alinhado à esquerda)
+    renderGrade(container, "Diagnósticos de Enfermagem", ["DiagnosticosEnfermagemSelect"], "diagnostico", false);
     
-    // 4. Exibir Seção de Resultado
+    // GRADE 2: Prescrição (Com horários, largura total)
+    const idsPrescricao = ["cuidadosEnfermagemSelect", "prescricaoCirurgicaSelect", "prescricaoPosOperatoriaSelect"];
+    renderGrade(container, "Prescrição de Enfermagem", idsPrescricao, "cuidado", true);
+
+    // Exibir Seção de Resultado
     document.getElementById('result').style.display = 'block';
     document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
 }
 
-function displaySelectedOptions() {
-    const container = document.getElementById('selectedOptionsContainer');
-    container.innerHTML = '<h3 style="margin-top:20px;">Prescrição de Enfermagem</h3>';
-    
-    const scaleSection = document.getElementById('scale-prescricao');
-    const allSelectedItems = [];
-    
-    // Coleta todos os itens selecionados nos 3 grupos (Cuidados, Cirúrgico, Pós-Op)
-    scaleSection.querySelectorAll('.assessment-group').forEach(group => {
-        const select = group.querySelector('select');
-        if (select && select.hasAttribute('multiple')) {
-            Array.from(select.selectedOptions).forEach(option => {
-                allSelectedItems.push({
-                    text: option.textContent.trim(),
-                    value: option.value
-                });
-            });
+function renderGrade(container, title, selectIds, type, showHour) {
+    let items = [];
+    selectIds.forEach(id => {
+        const select = document.getElementById(id);
+        if (select) {
+            Array.from(select.selectedOptions).forEach(opt => items.push(opt.textContent.trim()));
         }
     });
 
-    if (allSelectedItems.length > 0) {
-        const gridContainer = document.createElement('div');
-        gridContainer.className = 'prescription-grid';
-        
-        // Cabeçalhos
-        const h1 = document.createElement('div'); h1.className = 'grid-header-cuidado'; h1.textContent = 'Cuidado';
-        const h2 = document.createElement('div'); h2.className = 'grid-header-horario'; h2.textContent = 'Horários';
-        gridContainer.appendChild(h1);
-        gridContainer.appendChild(h2);
+    const section = document.createElement('div');
+    section.className = "result-section-group";
+    section.style.marginBottom = "30px";
+    
+    section.innerHTML = `<h3 style="margin-top:20px; color:#38a700; border-bottom: 2px solid #38a700; padding-bottom: 5px;">${title}</h3>`;
+    
+    const grid = document.createElement('div');
+    grid.className = 'prescription-grid';
 
-        // Linhas de cuidados
-        allSelectedItems.forEach(item => {
-            const divCuidado = document.createElement('div');
-            divCuidado.className = 'grid-item-cuidado';
-            divCuidado.textContent = item.text;
-
-            const divHorario = document.createElement('div');
-            divHorario.className = 'grid-item-horario';
-            const input = document.createElement('input');
-            input.type = 'text';
-            divHorario.appendChild(input);
-
-            gridContainer.appendChild(divCuidado);
-            gridContainer.appendChild(divHorario);
-        });
-
-        container.appendChild(gridContainer);
+    // Cabeçalhos
+    if (showHour) {
+        grid.innerHTML = `
+            <div class="grid-header-cuidado">Cuidado / Intervenção</div>
+            <div class="grid-header-horario">Horários</div>
+        `;
     } else {
-        container.innerHTML += '<p>Nenhum cuidado selecionado.</p>';
+        grid.innerHTML = `
+            <div class="grid-header-cuidado" style="grid-column: span 2; text-align: left; padding-left: 10px;">Diagnóstico Identificado</div>
+        `;
     }
+
+    items.forEach(text => {
+        addTableRow(grid, text, false, showHour);
+    });
+
+    section.appendChild(grid);
+    
+    // Botão Adicionar Manual
+    const btnAdd = document.createElement('button');
+    btnAdd.type = "button";
+    btnAdd.className = "button no-print";
+    btnAdd.style = "margin-top: 10px; background-color: #28a745; font-size: 12px; padding: 6px 12px; cursor: pointer; border: none; border-radius: 4px; color: white;";
+    btnAdd.textContent = `+ Adicionar ${type === 'diagnostico' ? 'Diagnóstico' : 'Cuidado'}`;
+    btnAdd.onclick = () => addTableRow(grid, '', true, showHour);
+    
+    section.appendChild(btnAdd);
+    container.appendChild(section);
+}
+
+function addTableRow(grid, text, isManual, showHour) {
+    const divDesc = document.createElement('div');
+    divDesc.className = 'grid-item-cuidado';
+    
+    // Configuração visual para Diagnósticos (campo 50% à esquerda)
+    if (!showHour) {
+        divDesc.style.gridColumn = "span 2";
+        divDesc.style.justifyContent = "flex-start"; 
+    }
+    
+    divDesc.style.display = "flex";
+    divDesc.style.alignItems = "center";
+    divDesc.style.gap = "10px";
+    divDesc.style.paddingLeft = "10px";
+
+    // Botão Excluir (Bolinha Vermelha com X)
+    const btnDel = document.createElement('div');
+    btnDel.className = 'no-print';
+    btnDel.innerHTML = '×';
+    btnDel.style = `
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        background-color: #ff4d4d;
+        color: white;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        flex-shrink: 0;
+    `;
+    btnDel.title = "Remover linha";
+
+    if (isManual) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = "Digite aqui...";
+        input.className = "manual-input";
+        
+        // Diagnóstico 50% da largura, Cuidado 90%
+        input.style.width = showHour ? "90%" : "50%"; 
+        
+        divDesc.appendChild(btnDel);
+        divDesc.appendChild(input);
+    } else {
+        divDesc.appendChild(btnDel);
+        const span = document.createElement('span');
+        span.textContent = text;
+        divDesc.appendChild(span);
+    }
+
+    grid.appendChild(divDesc);
+
+    let divHora = null;
+    if (showHour) {
+        divHora = document.createElement('div');
+        divHora.className = 'grid-item-horario';
+        const inputHora = document.createElement('input');
+        inputHora.type = 'text';
+        inputHora.placeholder = " ";
+        divHora.appendChild(inputHora);
+        grid.appendChild(divHora);
+    }
+
+    // Lógica de remoção
+    btnDel.onclick = () => {
+        divDesc.remove();
+        if (divHora) divHora.remove();
+    };
+
+    if (isManual) divDesc.querySelector('input').focus();
 }
 
 // ====================================================================
@@ -131,10 +202,7 @@ function displaySelectedOptions() {
 // ====================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Inicializa os cliques nos balões
     initializeOptionListeners();
-    
-    // Força a exibição da seção de prescrição (já que as outras sumiram)
     const prescricao = document.getElementById('scale-prescricao');
     if(prescricao) prescricao.style.display = 'block';
 });

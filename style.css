@@ -334,8 +334,14 @@ h2 {
     /* 2. Margens Mínimas da Página */
     @page {
         size: A4;
-        margin: 0.8cm; /* Margem da página reduzida */
+        margin: 0.5cm; /* Reduzido de 0.8cm para 0.5cm */
     }
+
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
     
     /* 3. Mostrar APENAS a seção de resultado e aplicar fonte pequena */
     #result, #result * {
@@ -343,7 +349,7 @@ h2 {
         box-shadow: none !important;
         border: none !important;
         color: #000 !important;
-        font-size: 11pt !important; /* Fonte aumentada para 11pt para melhor leitura */
+        font-size: 09pt !important; /* Fonte aumentada para 11pt para melhor leitura */
     }
 
     #result {
@@ -369,9 +375,9 @@ h2 {
     
     /* 5. Otimização de Espaçamento Vertical */
     #result h2, #result h3 {
-        margin-top: 10px !important;
+        margin-top: 5px !important;
         margin-bottom: 10px !important;
-        font-size: 14pt !important; /* Títulos um pouco maiores, mas com margem zero */
+        font-size: 12pt !important; /* Títulos um pouco maiores, mas com margem zero */
         text-align: center !important;
     }
     
@@ -409,18 +415,31 @@ h2 {
     .prescription-grid .grid-header-horario {
         background-color: #f8f8f8 !important;
         border-bottom: 1px solid #000 !important;
-        font-size: 10pt !important;
-        padding: 5px !important;
+        font-size:9pt !important;
+       padding: 5px 80px !important; /* Aumentamos o padding nas laterais */
+        text-align: left !important;   /* Mudamos de center para left */
     }
 
     .prescription-grid .grid-item-cuidado,
-    .prescription-grid .grid-item-horario {
-        border-bottom: 1px dotted #000 !important; /* Linhas pontilhadas entre os itens */
+   .prescription-grid .grid-header-horario {
+        background-color: #f8f8f8 !important;
+        border-bottom: 1px solid #000 !important;
+        font-size: 9pt !important;
         padding: 5px !important;
+        text-align: center !important;
     }
 
-    .prescription-grid .grid-item-cuidado {
-        border-right: 1px solid #000 !important;
+    .prescription-grid .grid-item-horario {
+        display: flex !important;
+        justify-content: center !important; /* Centraliza horizontalmente */
+        align-items: center !important;     /* Centraliza verticalmente */
+        text-align: center !important;
+    }
+
+    /* ADICIONADO: Garante que o input dentro da célula também esteja centralizado */
+    .prescription-grid .grid-item-horario input {
+        text-align: center !important;
+        width: 100% !important;
     }
 
     /* Ocultar input fields e substituí-los por uma linha sublinhada/espaço vazio para preenchimento manual */
@@ -433,7 +452,7 @@ h2 {
         margin: 0 !important;
         background-color: transparent !important;
         box-shadow: none !important;
-        font-size: 10pt !important;
+        font-size: 9pt !important;
         height: 1.5em; /* Garante altura mínima para escrever */
     }
 
@@ -442,13 +461,18 @@ h2 {
         border-bottom: none !important;
     }
 
+    
+
     /* 6. ÁREA DE ASSINATURA (Mostra somente na Impressão) */
     .signature-area {
         display: block !important; /* **MOSTRA** a área de assinatura na impressão */
         margin-top: 30px !important;
         text-align: right;
     }
-    .button {
+    .button, button, .no-print, .header-section, .patient-info, #assessmentForm {
         display: none !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 }

@@ -47,16 +47,94 @@
                     <label>Data de Nascimento</label>
                     <input type="date" id="patientBirth">
                 </div>
-                <div>
-                    <label>Nome da Mãe</label>
-                    <input type="text" id="patientMother" placeholder="Nome da mãe">
-                </div>
+                
                 <div>
                     <label>Prontuário</label>
                     <input type="text" id="patientRecord" placeholder="Nº prontuário">
                 </div>
             </div>
         </div>
+
+
+
+ <form id="assessmentForm">
+          <div class="assessment-group" data-criterion="DiagnosticosEnfermagem">
+    <div class="criterion-header" onclick="toggleOptions(this)">
+        <label>Diagnósticos de Enfermagem</label>
+        <span class="chevron"> ▶ </span>
+    </div>
+
+    <select id="DiagnosticosEnfermagemSelect" name="DiagnosticosEnfermagem[]" style="display: none;" multiple>
+        <option value="1">Risco de Lesão por Pressão</option>
+        <option value="2">Risco de Infecção</option>
+        <option value="3">Risco de Queda</option>
+        <option value="4">Risco de Dor</option>
+        <option value="5">Risco de Nutrição Desequilibrada</option>
+        <option value="6">Risco de Integridade da Pele Prejudicada</option>
+        <option value="7">Risco de Mobilidade Física Prejudicada</option>
+        <option value="8">Risco de Isolamento Social</option>
+        <option value="9">Risco de Ansiedade</option>
+        <option value="10">Risco de Depressão</option>
+        <option value="11">Risco de Constipação</option>
+        <option value="13">Risco de Comprometimento da Integridade Tissular</option>
+        <option value="14">Risco de Comprometimento da Integridade da Pele</option>
+        <option value="15">Padrão Respiratório Ineficaz</option>
+        <option value="16">Troca de Gases Prejudicada</option>
+        <option value="17">Débito Cardíaco Diminuído</option>
+        <option value="18">Risco de Perfusão Tissular Cerebral Ineficaz</option>
+        <option value="19">Risco de Choque</option>
+        <option value="20">Volume de Líquidos Deficiente</option>
+        <option value="21">Risco de Aspiração</option>
+        <option value="22">Dor Aguda</option>
+        <option value="23">Mobilidade Física Prejudicada</option>
+        <option value="24">Risco de Perfusão Tissular Periférica Ineficaz</option>
+        <option value="25">Risco de Disfunção Neurovascular Periférica</option>
+        <option value="26">Déficit no Autocuidado: Banho</option>
+        <option value="27">Déficit no Autocuidado: Vestir-se</option>
+        <option value="28">Confusão Mental Aguda</option>
+        <option value="29">Medo</option>
+        <option value="30">Processos Familiares Interrompidos</option>
+        <option value="31">Risco de Trauma</option>
+        <option value="32">Risco de Sangramento</option>
+        <option value="33">Constipação</option>
+    </select>
+
+    <div class="option-container hidden-by-default" data-select-id="DiagnosticosEnfermagemSelect">
+        <div class="option-balloon" data-value="1">Risco de Lesão por Pressão</div>
+        <div class="option-balloon" data-value="2">Risco de Infecção</div>
+        <div class="option-balloon" data-value="3">Risco de Queda</div>
+        <div class="option-balloon" data-value="4">Risco de Dor</div>
+        <div class="option-balloon" data-value="5">Risco de Nutrição Desequilibrada</div>
+        <div class="option-balloon" data-value="6">Risco de Integridade da Pele Prejudicada</div>
+        <div class="option-balloon" data-value="7">Risco de Mobilidade Física Prejudicada</div>
+        <div class="option-balloon" data-value="8">Risco de Isolamento Social</div>
+        <div class="option-balloon" data-value="9">Risco de Ansiedade</div>
+        <div class="option-balloon" data-value="10">Risco de Depressão</div>
+        <div class="option-balloon" data-value="11">Risco de Constipação</div>
+        <div class="option-balloon" data-value="13">Risco de Comprometimento da Integridade Tissular</div>
+        <div class="option-balloon" data-value="14">Risco de Comprometimento da Integridade da Pele</div>
+        <div class="option-balloon" data-value="15">Padrão Respiratório Ineficaz</div>
+        <div class="option-balloon" data-value="16">Troca de Gases Prejudicada</div>
+        <div class="option-balloon" data-value="17">Débito Cardíaco Diminuído</div>
+        <div class="option-balloon" data-value="18">Risco de Perfusão Tissular Cerebral Ineficaz</div>
+        <div class="option-balloon" data-value="19">Risco de Choque</div>
+        <div class="option-balloon" data-value="20">Volume de Líquidos Deficiente</div>
+        <div class="option-balloon" data-value="21">Risco de Aspiração</div>
+        <div class="option-balloon" data-value="22">Dor Aguda</div>
+        <div class="option-balloon" data-value="23">Mobilidade Física Prejudicada</div>
+        <div class="option-balloon" data-value="24">Risco de Perfusão Tissular Periférica Ineficaz</div>
+        <div class="option-balloon" data-value="25">Risco de Disfunção Neurovascular Periférica</div>
+        <div class="option-balloon" data-value="26">Déficit no Autocuidado: Banho</div>
+        <div class="option-balloon" data-value="27">Déficit no Autocuidado: Vestir-se</div>
+        <div class="option-balloon" data-value="28">Confusão Mental Aguda</div>
+        <div class="option-balloon" data-value="29">Medo</div>
+        <div class="option-balloon" data-value="30">Processos Familiares Interrompidos</div>
+        <div class="option-balloon" data-value="31">Risco de Trauma</div>
+        <div class="option-balloon" data-value="32">Risco de Sangramento</div>
+        <div class="option-balloon" data-value="33">Constipação</div>
+    </div>
+</div>
+
 
         <form id="assessmentForm">
             <div class="scale-section" id="scale-prescricao">
@@ -182,6 +260,8 @@
                     </div>
                 </div>
             </div>
+
+            
         </form>
 
         <div class="container-button">
@@ -197,19 +277,11 @@
     <div class="patient-result-data">
         <p><strong>Nome:</strong> <span id="r_name"></span></p>
         <p><strong>Data Nasc.:</strong> <span id="r_birth"></span></p>
-        <p><strong>Mãe:</strong> <span id="r_mother"></span></p>
         <p><strong>Prontuário:</strong> <span id="r_record"></span></p>
     </div>
     
     <div id="selectedOptionsContainer"></div>
 
-    <div id="extraCareContainer" style="margin-top: 10px;" class="no-print">
-        <div style="text-align: center; margin-bottom: 10px;">
-            <button type="button" class="button" onclick="addExtraCareRow()" style="background-color: #28a745;">
-                + Adicionar Cuidado Manual
-            </button>
-        </div>
-    </div>
 
     <div class="no-print" style="margin-top: 20px; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
     <button type="button" class="button" onclick="window.print()" style="background-color: var(--color-primary-blue); padding: 12px 40px;">
