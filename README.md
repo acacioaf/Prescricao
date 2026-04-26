@@ -1,1 +1,1 @@
-Projeto focado em Prescrição de enfermagem hospitalar 
+Projeto focado em Prescrições de enfermagem 
